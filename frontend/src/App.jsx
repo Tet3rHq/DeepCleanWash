@@ -2,7 +2,7 @@ import "./test.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import FloatingWhatsApp from "./components/FloatingWhatsapp";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import AdminDashboard from "./pages/AdminDashboard";
