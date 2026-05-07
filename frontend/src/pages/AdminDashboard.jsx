@@ -34,7 +34,10 @@ function AdminDashboard() {
       setStats(statsRes.data);
       setBookings(bookingsRes.data);
     } catch (error) {
+      console.error("Admin dashboard error:", error.response?.data || error.message);
+
       if (error.response?.status === 401) {
+        alert("Admin session failed. Token was rejected by backend.");
         localStorage.removeItem("adminToken");
         navigate("/admin-login");
       }
