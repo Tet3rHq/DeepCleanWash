@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Database
+backend/instance/
+
+# Virtual environments
+venv/
+backend/venv/
+
+# Node
+frontend/node_modules/
+
+# Build
+dist/
+
+# Environment files
+.env
