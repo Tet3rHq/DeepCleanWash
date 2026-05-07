@@ -4,8 +4,8 @@ from database import db
 from routes.service_routes import service_bp
 from routes.booking_routes import booking_bp
 from routes.admin_routes import admin_bp
-from models import Service
-from database import db
+from models import Service, AdminUser
+from werkzeug.security import generate_password_hash
 
 
 def create_app():
@@ -32,40 +32,46 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+        if Service.query.count() == 0:
+            services = [
+                Service(
+                    name="Laundry Service",
+                    description="Professional laundry cleaning and washing.",
+                    base_price=800
+                ),
+                Service(
+                    name="Sofa Cleaning",
+                    description="Deep sofa and upholstery cleaning.",
+                    base_price=2500
+                ),
+                Service(
+                    name="Ironing Service",
+                    description="Professional ironing and folding.",
+                    base_price=500
+                ),
+                Service(
+                    name="Deep Cleaning",
+                    description="Full house and apartment deep cleaning.",
+                    base_price=4500
+                ),
+            ]
+
+            db.session.add_all(services)
+            db.session.commit()
+
+        if AdminUser.query.count() == 0:
+            admin = AdminUser(
+                username="mitchello",
+                password_hash=generate_password_hash("Mitchello@2026")
+            )
+
+            db.session.add(admin)
+            db.session.commit()
+
     return app
 
 
 app = create_app()
-with app.app_context():
-    db.create_all()
-
-    if Service.query.count() == 0:
-        services = [
-            Service(
-                name="Laundry Service",
-                description="Professional laundry cleaning and washing.",
-                base_price=800
-            ),
-            Service(
-                name="Sofa Cleaning",
-                description="Deep sofa and upholstery cleaning.",
-                base_price=2500
-            ),
-            Service(
-                name="Ironing Service",
-                description="Professional ironing and folding.",
-                base_price=500
-            ),
-            Service(
-                name="Deep Cleaning",
-                description="Full house and apartment deep cleaning.",
-                base_price=4500
-            ),
-        ]
-
-        db.session.add_all(services)
-        db.session.commit()
-
 
 if __name__ == "__main__":
     app.run(debug=True)
