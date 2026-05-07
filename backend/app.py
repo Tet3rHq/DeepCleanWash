@@ -59,14 +59,16 @@ def create_app():
             db.session.add_all(services)
             db.session.commit()
 
-        if AdminUser.query.count() == 0:
-            admin = AdminUser(
-                username="mitchello",
-                password_hash=generate_password_hash("Mitchello@2026")
-            )
-
-            db.session.add(admin)
-            db.session.commit()
+            existing_admin = AdminUser.query.filter_by(username="mitchello").first()
+            
+            if not existing_admin:
+                admin = AdminUser(
+                    username="mitchello",
+                      password_hash=generate_password_hash("Mitchello@2026")
+                 )
+                
+                db.session.add(admin)
+                db.session.commit()
 
     return app
 
